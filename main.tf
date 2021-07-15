@@ -6,7 +6,7 @@ terraform {
   backend "s3" {
     bucket = "terraform-backend-bucket-anou"
     key    = "test/key"
-    region = "us-west-1"
+    region = "eu-west-1"
   }
 }
 
