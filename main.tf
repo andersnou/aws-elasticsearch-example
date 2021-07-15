@@ -3,12 +3,10 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "test_bucket" {
-  bucket = format("es-test-bucket-%s", random_pet.prefix.id)
+  bucket = "es-test-bucket-12345"
   acl = "private"
 
   tags = {
     Name = "Test bucket"
   }
 }
-
-resource "random_pet" "prefix" {}
