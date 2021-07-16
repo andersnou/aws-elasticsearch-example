@@ -2,11 +2,14 @@ provider "aws" {
   region = var.region
 }
 
-terraform {
-  backend "s3" {
-    bucket = "terraform-backend-bucket-anou"
-    key    = "test/key"
-    region = "eu-west-1"
+# terraform {
+#   backend "s3" {
+#     bucket = "terraform-backend-bucket-anou"
+#     key    = "test/key"
+#     region = "eu-west-1"
+#   }
+# }
+
   }
 }
 

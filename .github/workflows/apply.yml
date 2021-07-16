@@ -1,58 +1,58 @@
-# name: Terraform Apply
-# on:
-#   push:
-#     branches:
-#     - master
+name: Terraform Apply
+on:
+  push:
+    branches:
+    - master
 
-# jobs:
-#   apply:
-#     runs-on: ubuntu-latest
-#     if: "!contains(github.event.head_commit.message, 'tf-destroy')"
-#     steps:
-#     - uses: actions/checkout@v1
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.message, 'tf-apply')"
+    steps:
+    - uses: actions/checkout@v1
         
-#     - name: Verify Terraform version
-#       run: terraform --version
+    - name: Verify Terraform version
+      run: terraform --version
       
-#     - name: Terraform init
-#       env:
-#         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       run: terraform init -input=false
+    - name: Terraform init
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: terraform init -input=false
       
-#     - name: Terraform validation
-#       run: terraform validate
+    - name: Terraform validation
+      run: terraform validate
       
-#     - name: Terraform apply
-#       env: 
-#         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       run: terraform apply -auto-approve -input=false
-#   destroy:
-#     runs-on: ubuntu-latest
-#     if: "contains(github.event.head_commit.message, 'tf-destroy')"
-#     name: destroy
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v1
+    - name: Terraform apply
+      env: 
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: terraform apply -auto-approve -input=false
+  destroy:
+    runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.message, 'tf-destroy')"
+    name: destroy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
 
-#       - name: Terraform init
-#         env:
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         run: terraform init -input=false
+      - name: Terraform init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform init -input=false
       
-#       - name: Terraform validation
-#         run: terraform validate
+      - name: Terraform validation
+        run: terraform validate
 
-#       - name: Terraform state pull
-#         env:
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         run: terraform state pull
+      - name: Terraform state pull
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform state pull
         
-#       - name: Terraform destroy
-#         env: 
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         run: terraform destroy -auto-approve -input=false
+      - name: Terraform destroy
+        env: 
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform destroy -auto-approve -input=false
